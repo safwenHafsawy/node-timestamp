@@ -10,4 +10,11 @@ const stamp = (req, res) => {
   res.status(200).send({ unix: unixDate, utc: utcDate });
 };
 
-module.exports = stamp;
+const currentStamp = (req, res) => {
+  const currentDate = new Date();
+  const currentDateUTC = new Date().toUTCString();
+  const currentDateUnix = currentDate / 1000;
+  res.status(200).json({ unix: currentDateUnix, utc: currentDateUTC });
+};
+
+module.exports = { stamp, currentStamp };
