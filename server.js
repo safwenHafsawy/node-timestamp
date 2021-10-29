@@ -5,6 +5,7 @@ require("dotenv").config();
 const cors = require("cors");
 app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
+app.use(express.static("./views"));
 const stampRoute = require("./routes/stampRoute");
 app.use("/api", stampRoute);
 
