@@ -12,17 +12,16 @@ const stamp = (req, res) => {
       .json({ unix: Number(date), utc: new_date.toUTCString() });
   }
   //handling req with regular date
-  date = new Date(date);
+  date = Date.parse(date);
   const utcDate = new Date(date).toUTCString();
-  const unixDate = (new Date(date) / 1000) * 1000;
 
-  res.status(200).json({ unix: unixDate, utc: utcDate });
+  res.status(200).json({ unix: date, utc: utcDate });
 };
 
 const currentStamp = (req, res) => {
   const currentDate = new Date();
   const currentDateUTC = new Date().toUTCString();
-  const currentDateUnix = currentDate / 1000;
+  const currentDateUnix = (currentDate / 1000) * 1000;
   res.status(200).json({ unix: currentDateUnix, utc: currentDateUTC });
 };
 
