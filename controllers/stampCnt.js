@@ -4,18 +4,25 @@ const stamp = (req, res) => {
   if (isNaN(new Date(Number(date))) && isNaN(new Date(date))) {
     return res.status(200).json({ error: "Invalid Date" });
   }
-  //handling req with unix timestamp
-  if (date.search("-") === -1) {
-    const new_date = new Date(Number(date));
-    return res
-      .status(200)
-      .json({ unix: Number(date), utc: new_date.toUTCString() });
-  }
-  //handling req with regular date
-  date = Date.parse(date);
-  const utcDate = new Date(date).toUTCString();
 
-  res.status(200).json({ unix: date, utc: utcDate });
+  if (date.includes("-")) {
+    /*ISO format */
+    const unix = Date.parse(date);
+    const utc = new Date(date).toUTCString();
+    return res.status(200).json({ unix, utc });
+  } else if (date.includes(" ")) {
+    /*long format date*/
+    console.log(new Date(date));
+    const timeZoneDate = date.concat(" UTC");
+    const unix = Date.parse(timeZoneDate);
+    const utc = new Date(unix).toUTCString();
+    return res.status(200).json({ unix, utc });
+  } else {
+    /*timestamp format */
+    const unix = Number(date);
+    const utc = new Date(unix).toUTCString();
+    return res.status(200).json({ unix, utc });
+  }
 };
 
 const currentStamp = (req, res) => {
