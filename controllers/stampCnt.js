@@ -12,7 +12,6 @@ const stamp = (req, res) => {
     return res.status(200).json({ unix, utc });
   } else if (date.includes(" ")) {
     /*long format date*/
-    console.log(new Date(date));
     const timeZoneDate = date.concat(" UTC");
     const unix = Date.parse(timeZoneDate);
     const utc = new Date(unix).toUTCString();
